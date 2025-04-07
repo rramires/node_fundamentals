@@ -28,8 +28,34 @@ const server = http.createServer((req, res) => {
 
     const { method, url } = req;
     // Log the request method and URL
+    /* 
     console.log(`Request method: ${method}`);  
-    console.log(`Request URL: ${url}`);
+    console.log(`Request URL: ${url}`); 
+    */
+
+    // Creating very simple routes, just for understanding
+
+    // Hello, at the root of the server
+    if (method === 'GET' && url === '/') {
+        res.writeHead(200, { 'Content-Type': 'text/plain' });
+        res.end('Hello World, from server!');
+        return;
+    }
+
+    // Set the response header to JSON for oher routes
+    res.writeHead(200, { 'Content-Type': 'application/json' });
+
+    // GET Route to get a list of users
+    if (method === 'GET' && url === '/users') {
+        res.end(JSON.stringify([{ id: 1, name: 'John Doe' }]));
+        return;
+    }
+
+    // POST Route to create a new user
+    if (method === 'POST' && url === '/users') {
+        res.end(JSON.stringify({ id: 2, name: 'Jane Doe' }));
+        return;
+    }
 
     res.end('Hello World!');
 });
