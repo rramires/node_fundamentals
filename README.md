@@ -54,8 +54,7 @@ npm run dev
 
 ### The difference between writeHead and setHeader
 
-**setHeader** is used to set a single header field
-we can add multiple setHeaders
+**setHeader** is used to set a single header field. We can add multiple setHeaders
 
 ```javascript
 let body = "hello world";
@@ -81,16 +80,16 @@ response.writeHead(200, {
 ### Most used HTTP status codes
 
 **Success Codes:**  
-**200 OK** - Used in GET, PUT, PATCH (successful request with response body)  
-**201 Created** - Used in POST (new resource created)  
-**204 No Content** - Used in DELETE, PUT, PATCH (successful request, no response body)
+**200 OK** - Used in **GET, PUT, PATCH** (successful request with response body)  
+**201 Created** - Used in **POST** (new resource created)  
+**204 No Content** - Used in **DELETE, PUT, PATCH** (successful request, no response body)
 
 **Client Error Codes:**  
 **400 Bad Request** - Used in all methods (invalid request syntax)  
 **401 Unauthorized** - Used in all methods (authentication required)  
 **403 Forbidden** - Used in all methods (no permission)  
 **404 Not Found** - Used in all methods (resource doesn't exist)  
-**409 Conflict** - Used in POST (resource exists), PUT/PATCH (version conflict), DELETE (dependencies)
+**409 Conflict** - Used in **POST** (resource exists), **PUT/PATCH** (version conflict), **DELETE** (dependencies)
 
 **Server Error Codes:**  
 **500 Internal Server Error** - Used in all methods (server failure)  
