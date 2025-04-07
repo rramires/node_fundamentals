@@ -22,7 +22,14 @@ import http from 'node:http';
 // GET /users/:id - Get a specific user
 // PUT /users/:id - Update a specific user
 // DELETE /users/:id - Delete a specific user
- 
+
+// Stateful X Stateless
+// Stateful - The server maintains the state of the client
+// Stateless - The server does not maintain the state of the client
+
+// Stateless
+const users = [];
+
 // Create a server
 const server = http.createServer((req, res) => {
 
@@ -37,27 +44,51 @@ const server = http.createServer((req, res) => {
 
     // Hello, at the root of the server
     if (method === 'GET' && url === '/') {
-        res.writeHead(200, { 'Content-Type': 'text/plain' });
+        
+        // Set the response header - Text and status 200 - OK
+        //res.writeHead(200, { 'Content-Type': 'text/plain' });
+        // or
+        res.setHeader('Content-Type', 'text/plain');
+        res.statusCode = 200; // OK
+
         res.end('Hello World, from server!');
         return;
     }
 
-    // Set the response header to JSON for oher routes
-    res.writeHead(200, { 'Content-Type': 'application/json' });
-
     // GET Route to get a list of users
     if (method === 'GET' && url === '/users') {
-        res.end(JSON.stringify([{ id: 1, name: 'John Doe' }]));
+
+        // Set the response header - JSON and status 200 - OK
+        //res.writeHead(200, { 'Content-Type': 'application/json' });
+        // or
+        res.setHeader('Content-Type', 'application/json');
+        res.statusCode = 200; // OK
+
+        // Simulating a database operation - return users array
+        res.end(JSON.stringify(users));
         return;
     }
 
     // POST Route to create a new user
     if (method === 'POST' && url === '/users') {
-        res.end(JSON.stringify({ id: 2, name: 'Jane Doe' }));
+
+        const newUser = { id: users.length + 1, name: 'John Doe ' + (users.length + 1) };
+
+        // Simulating a database operation - inserting a new user in array
+        users.push(newUser);
+
+        // Set the response header - JSON and status 201 - Created
+        //res.writeHead(201, { 'Content-Type': 'application/json' });
+        // or
+        res.setHeader('Content-Type', 'application/json');
+        res.statusCode = 201; // Created 
+
+        res.end(JSON.stringify(newUser));
         return;
     }
 
-    res.end('Hello World!');
+    // If try to access a non-existent route   
+    return res.writeHead(404, { 'Content-Type': 'text/plain' }).end('Route not found');
 });
 
 // Run the server
