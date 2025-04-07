@@ -2,7 +2,7 @@
 // ts-node ./src/streams_fundamentals.js
 
 
-import { Readable, Writable } from 'stream';
+import { Readable, Writable, Transform } from 'stream';
 
 // This is a simple example to understand how streams work in NodeJs.
 
@@ -35,6 +35,26 @@ class MyReadStream extends Readable {
     }  
 }
 
+
+// Using transform streams to transform data 
+
+class MyTrasformStream extends Transform {
+    // Simulate a stream of data
+    _transform(chunk, encoding, callback) {
+        
+        const altered = Number(chunk.toString()) * -1;
+
+        /*
+        
+        */
+
+        // null in first parameter in callback = no error
+        // If there was any testing on the data, this would be the place to throw a possible error
+        callback(null, Buffer.from(altered.toString())); 
+    }
+}
+
+
 // Using writable streams to write data to a destination
 
 class MyWriteStream extends Writable {
@@ -60,10 +80,10 @@ class MyWriteStream extends Writable {
     }
 }
 
-
-
 // create a new instance of the stream and pipe it to the stdout
-const myStream = new MyReadStream().pipe(new MyWriteStream());           
+const myStream = new MyReadStream() // Read data
+        .pipe(new MyTrasformStream()) // transform data
+        .pipe(new MyWriteStream()); // write received data      
 
 
 
