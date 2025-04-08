@@ -5,7 +5,7 @@ import http from 'http';
 import { Transform, Writable } from 'stream';
 
 
-// Transform streamed data
+// Transform streamed partial data
 class MyTrasformStream extends Transform {
     
     _transform(chunk, encoding, callback) {
@@ -16,6 +16,7 @@ class MyTrasformStream extends Transform {
     }
 }
 
+// Process/use streamed partial data
 class MyWriteStream extends Writable {
 
     _write(chunk, encoding, callback) {
@@ -30,9 +31,27 @@ class MyWriteStream extends Writable {
 // req = ReadableStream
 // res = WritableStream
 
-const server = http.createServer((req, res) => {
-    return req.pipe(new MyTrasformStream())
-              .pipe(new MyWriteStream());
+const server = http.createServer( async (req, res) => {
+
+    // Canalize the request stream to the transform and write streams
+    req.pipe(new MyTrasformStream())
+       .pipe(new MyWriteStream());
+    
+    // To get all the content from the stream
+    const buffers =[];
+
+    // Await works on streams, the loop iterates as data arrives.
+    // Await ensures that something will only be executed after for, after the stream ends
+    for await (const chunk of req) {
+        buffers.push(chunk);
+    }
+
+    const fullStreamContent = Buffer.concat(buffers).toString();
+
+    console.log(`Full stream content: ${fullStreamContent}`);
+
+    // send the response
+    res.end(fullStreamContent);
 });
 
 server.listen(3334, () => {

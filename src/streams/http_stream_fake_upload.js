@@ -27,7 +27,7 @@ class MyReadStream extends Readable {
                 this.push(buf);
             }
 
-        }, 250); // 250ms delay
+        }, 25); // delay
     }  
 }
 
@@ -39,4 +39,10 @@ fetch('http://localhost:3334', {
     headers: {
         'Content-Type': 'application/octet-stream'
     }
+}).then(res => {
+    return res.text();
+}).then(data => {
+    console.log(`Response from server: ${data}`);
+}).catch(err => {
+    console.error('Error:', err);
 });
