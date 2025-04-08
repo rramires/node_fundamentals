@@ -6,6 +6,7 @@
 
 // Interesting convention node:internalModule to differentiate node-internal modules from third-party ones
 import http from 'node:http';
+import { jsonMid } from './middlewares/jsonMid.js';
 
 
 // Stateless
@@ -16,17 +17,8 @@ const server = http.createServer(async (req, res) => {
 
     const { method, url } = req;
     
-    // Retrieving the request body
-    const buffers =[];
-    for await (const chunk of req) {
-        buffers.push(chunk);
-    }
-    try{
-        req.body = JSON.parse(Buffer.concat(buffers).toString());
-    }
-    catch{
-        req.body = null;
-    }
+    // Middleware to parse JSON body
+    await jsonMid(req, res);
     //console.log('Request received:', { method, url, body });
 
 
