@@ -1,5 +1,5 @@
 // run with: 
-// ts-node ./src/streams_fundamentals.js
+// ts-node ./src/streams/streams_fundamentals.js
 
 
 import { Readable, Writable, Transform } from 'stream';
@@ -45,7 +45,7 @@ class MyTrasformStream extends Transform {
         const altered = Number(chunk.toString()) * -1;
 
         /*
-        
+            This is where we change/process the data that arrives and will be output to the writable.
         */
 
         // null in first parameter in callback = no error
