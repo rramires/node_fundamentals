@@ -77,6 +77,31 @@ response.writeHead(200, {
 
 ---
 
+### HTTP methods are used to define the action to be performed on a resource.
+
+**GET** - Use to retrieve data from a server  
+**POST** - Use to send data to a server  
+**PUT** - Use to update existing data on a server  
+**PATCH** - Use to apply partial modifications to a resource  
+**DELETE** - Use to remove data from a server  
+
+**We can have more than one method per route**  
+
+For example:  
+**POST** /users - Create a new user  
+**GET** /users - Get a list of users  
+**GET** /users/:id - Get a specific user  
+**PUT** /users/:id - Update a specific user  
+**DELETE** /users/:id - Delete a specific user  
+
+---
+
+### Stateful X Stateless
+**Stateful** - The server maintains the state of the client  
+**Stateless** - The server does not maintain the state of the client  
+
+---
+
 ### Most used HTTP status codes
 
 **Success Codes:**  
