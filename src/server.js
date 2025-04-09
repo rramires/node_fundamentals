@@ -7,10 +7,12 @@
 // Interesting convention node:internalModule to differentiate node-internal modules from third-party ones
 import http from 'node:http';
 import { jsonMid } from './middlewares/jsonMid.js';
+import { Database } from './middlewares/database.js';
 
 
-// Stateless
-const users = [];
+// Database
+const TABLE_NAME = 'users';
+const database = new Database()
 
 // Create a server
 const server = http.createServer(async (req, res) => {
@@ -26,13 +28,13 @@ const server = http.createServer(async (req, res) => {
     if (method === 'POST' && url === '/users') {
 
         // Getting the request body 
-        const newUser = { id: users.length + 1, 
-            name: req.body.name + " " + (users.length + 1),
+        const newUser = { 
+            name: req.body.name,
             email: req.body.email
         };
 
-        // Simulating a database operation - inserting a new user in array
-        users.push(newUser);
+        // Insert
+        database.insert(TABLE_NAME, newUser);
 
         // Set the response header - JSON and status 201 - Created
         //res.writeHead(201, { 'Content-Type': 'application/json' });
@@ -69,7 +71,8 @@ const server = http.createServer(async (req, res) => {
         res.setHeader('Content-Type', 'application/json');
         res.statusCode = 200; // OK
 
-        // Simulating a database operation - return users array
+        const users = database.select(TABLE_NAME);
+        
         res.end(JSON.stringify(users));
         return;
     }
