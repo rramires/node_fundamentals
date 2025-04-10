@@ -49,10 +49,18 @@ export const routes = [
     },
     {
         method: 'DELETE',
-        path: buildRoutePath('/users/:userId/groups/:groupId'),
+        path: buildRoutePath('/users/:id'),
         handler: (req, res) => {
 
-            res.end();
+            const { id } = req.params;
+            //console.log('id:', id);
+
+            // delete
+            const sucess = database.delete(TABLE_NAME, id);
+            //console.log('sucess:', sucess);
+
+            // Set the response header - JSON and status 204 - No Content or 404 - Not Found
+            sucess ? res.writeHead(204).end() : res.writeHead(404).end('User not found');       
         }
     }
 ]

@@ -22,7 +22,11 @@ const server = http.createServer(async (req, res) => {
     // The handler function is called when the route is matched
     if(route) {
         const routeParams = req.url.match(route.path);
-        console.log('Route params:', routeParams);
+        //console.log('Route params:', routeParams);
+
+        // add params to the request object
+        req.params = { ...routeParams.groups };
+        //console.log('req.params:', req.params);
 
         return route.handler(req, res);
     }
