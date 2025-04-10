@@ -1,10 +1,4 @@
-// CommonJS module
-// const http = require('http');
-
-// To use import, it was defined in package.json: type": "module"
-//import http from 'node:http'; // Ok, it works
-
-// Interesting convention node:internalModule to differentiate node-internal modules from third-party ones
+// Importing required modules
 import http from 'node:http';
 import { jsonMid } from './middlewares/jsonMid.js';
 import { routes } from './middlewares/routes.js';

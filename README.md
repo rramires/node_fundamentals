@@ -77,6 +77,35 @@ response.writeHead(200, {
 
 ---
 
+### The 3 types of http request
+
+**Query Parameters** - (Stateful URL) Filters, pagination,   
+non-mandatory parameters, since the parameters are exposed  
+**GET** http://localhost:3333/users?userActive1&sorting=descending   
+
+**Router Parameters** - Identification of a resource  
+**GET** http://localhost:3333/users/1 - Gets user 1  
+**PUT** http://localhost:3333/users/1 - Updates user 1  
+**PATCH** http://localhost:3333/users/1 - Updates partial data of user 1  
+**DELETE** http://localhost:3333/users/1 - Deletes user 1  
+
+**Request Body** - Sending information from a form.  
+It is protected if you use HTTPS in production  
+**POST** http://localhost:3333/users  
+Hidden in the request body:
+
+```json
+{ "name": "Tom", "email": "tom@email.com" }    
+```
+
+---
+
+### Stateful X Stateless
+**Stateful** - The server maintains the state of the client  
+**Stateless** - The server does not maintain the state of the client  
+
+---
+
 ### HTTP methods are used to define the action to be performed on a resource.
 
 **GET** - Use to retrieve data from a server  
@@ -93,12 +122,6 @@ For example:
 **GET** /users/:id - Get a specific user  
 **PUT** /users/:id - Update a specific user  
 **DELETE** /users/:id - Delete a specific user  
-
----
-
-### Stateful X Stateless
-**Stateful** - The server maintains the state of the client  
-**Stateless** - The server does not maintain the state of the client  
 
 ---
 
