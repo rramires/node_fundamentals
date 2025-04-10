@@ -16,11 +16,14 @@ const server = http.createServer(async (req, res) => {
 
     // Find routes
     const route = routes.find(route => {
-        return route.method === method && route.path === url;
+        return route.method === method && route.path.test(url);
     });
     //console.log('Route found:', route);
     // The handler function is called when the route is matched
     if(route) {
+        const routeParams = req.url.match(route.path);
+        console.log('Route params:', routeParams);
+
         return route.handler(req, res);
     }
     // If try to access a non-existent route   

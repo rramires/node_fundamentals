@@ -1,4 +1,5 @@
 import { Database } from './database.js';
+import { buildRoutePath } from '../utils/build-route-path.js';
 
 // Database
 const database = new Database();
@@ -10,7 +11,7 @@ const TABLE_NAME = 'users';
 export const routes = [
     {
         method: 'GET',
-        path: '/',
+        path: buildRoutePath('/'),
         handler: (req, res) => {
             // Set the response header - Text and status 200 - OK
             res.setHeader('Content-Type', 'text/plain');
@@ -20,7 +21,7 @@ export const routes = [
     },
     {
         method: 'GET', 
-        path: '/users',
+        path: buildRoutePath('/users'),
         handler: (req, res) => {
             // Set the response header - JSON and status 200 - OK
             res.setHeader('Content-Type', 'application/json');
@@ -31,7 +32,7 @@ export const routes = [
     },
     {
         method: 'POST',
-        path: '/users',
+        path: buildRoutePath('/users'),
         handler: (req, res) => {
             // Getting the request body 
             const newUser = { 
@@ -44,6 +45,14 @@ export const routes = [
             res.setHeader('Content-Type', 'application/json');
             res.statusCode = 201; // Created 
             res.end(JSON.stringify(newUser));
+        }
+    },
+    {
+        method: 'DELETE',
+        path: buildRoutePath('/users/:userId/groups/:groupId'),
+        handler: (req, res) => {
+
+            res.end();
         }
     }
 ]
