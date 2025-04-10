@@ -62,5 +62,24 @@ export const routes = [
             // Set the response header - JSON and status 204 - No Content or 404 - Not Found
             sucess ? res.writeHead(204).end() : res.writeHead(404).end('User not found');       
         }
+    },
+    {
+        method: 'PUT',
+        path: buildRoutePath('/users/:id'),
+        handler: (req, res) => {
+
+            const { id } = req.params;
+            //console.log('id:', id);
+            
+            const { name, email } = req.body;
+            //console.log('name:', name, 'email:', email);
+
+            // Update
+            const sucess = database.update(TABLE_NAME, id, { name, email });
+            //console.log('sucess:', sucess);
+
+            // Set the response header - JSON and status 204 - No Content or 404 - Not Found
+            sucess ? res.writeHead(204).end() : res.writeHead(404).end('User not found');       
+        }
     }
 ]

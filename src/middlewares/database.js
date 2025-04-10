@@ -71,6 +71,26 @@ export class Database {
         }
     }
 
+    update(table, id, data){
+
+        // Find the index of the object with the given id
+        const rowIndex = this.#database[table].findIndex(row => row.id === id);
+
+        // If the object is not found, return null  
+        if(rowIndex === -1){
+            return false;
+        }
+        else{
+            // Replace row
+            this.#database[table][rowIndex] = { id, ...data };
+            // Save 
+            this.#persist();
+            //
+            return true;
+        }
+    }
+
+
     /* #getNextId(table){
         // if the table exists length+1 esle 1
         return this.#database[table] ? this.#database[table].length + 1 : 1;
