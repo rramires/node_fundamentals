@@ -2,6 +2,7 @@
 import http from 'node:http';
 import { jsonMid } from './middlewares/jsonMid.js';
 import { routes } from './middlewares/routes.js';
+import { extractQueryParams } from './utils/extract-query-params.js';
 
 // Database
 
@@ -24,9 +25,15 @@ const server = http.createServer(async (req, res) => {
         const routeParams = req.url.match(route.path);
         //console.log('Route params:', routeParams);
 
+        const { query, ...params } = routeParams.groups;
+
         // add params to the request object
-        req.params = { ...routeParams.groups };
+        req.params = params
         //console.log('req.params:', req.params);
+
+        // add query params to the request object
+        req.query = extractQueryParams(query);
+        //console.log('req.query', req.query);
 
         return route.handler(req, res);
     }
