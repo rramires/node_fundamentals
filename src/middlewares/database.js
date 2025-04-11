@@ -36,7 +36,7 @@ export class Database {
                 // Iterates the params
                 return Object.entries(search).some(([key, value]) => { 
                     // returns if matches
-                    return row[key].includes(value);
+                    return row[key].toLowerCase().includes(value.toLowerCase());
                 });
             });
         }
