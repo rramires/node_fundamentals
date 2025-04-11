@@ -26,7 +26,17 @@ export const routes = [
             // Set the response header - JSON and status 200 - OK
             res.setHeader('Content-Type', 'application/json');
             res.statusCode = 200; // OK
-            const users = database.select(TABLE_NAME);
+
+            // Get the query string
+            const { search } = req.query;
+            //console.log('search:', search);          
+
+            const users = database.select(TABLE_NAME, search ? {
+                // search in both name and email
+                name: search,
+                email: search   
+            } : null);
+
             res.end(JSON.stringify(users));
         }
     },

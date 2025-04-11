@@ -27,8 +27,20 @@ export class Database {
         });
     }
 
-    select(table){
-        const data = this.#database[table] ?? [];
+    select(table, search){
+        let data = this.#database[table] ?? [];
+
+        if(search){
+            // Iterates the records
+            data = data.filter(row => {
+                // Iterates the params
+                return Object.entries(search).some(([key, value]) => { 
+                    // returns if matches
+                    return row[key].includes(value);
+                });
+            });
+        }
+
         return data;       
     }
 
